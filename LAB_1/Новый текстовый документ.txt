@@ -1,1 +1,0 @@
-g++ .\src\main.cpp .\src\ai.cpp .\src\interface.cpp .\src\game8.cpp -I .\includes\ -o game8.exe
