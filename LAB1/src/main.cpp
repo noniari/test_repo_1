@@ -67,7 +67,7 @@ int main() {
     std::ofstream report("results.md");
     auto write_table = [](std::ostream& output,
                           const std::vector<RunResult>& rows) {
-        output << "| Начальная позиция | Алгоритм | Длина пути, ходов | Раскрыто вершин | Время, мкс |\n"
+        output << "| Start Position | Algorithm | Path Length (moves) | Expanded Vertices | Time (us) |\n"
                << "|---|---|---:|---:|---:|\n";
         for (const auto& row : rows) {
             output << "| " << row.start << " | " << row.algorithm << " | ";
