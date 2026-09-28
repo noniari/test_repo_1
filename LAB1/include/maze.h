@@ -9,7 +9,7 @@ bool is_goal(const State& state);
 
 int find_player(const State& state);
 
-std::vector<int> get_possible_moves(int player_index);
+std::vector<int> get_possible_moves(const State& state, int player_index);
 
 State make_move(const State& state, int player_index, int target_index);
 

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
-project(Game8 CXX)
+project(Maze CXX)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(Game8
+add_executable(Maze
     src/main.cpp
-    src/game8.cpp
+    src/maze.cpp
     src/interface.cpp
     src/ai.cpp
 )

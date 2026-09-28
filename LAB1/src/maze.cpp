@@ -1,4 +1,4 @@
-#include <game8.h>
+#include <maze.h>
 
 const int GOAL_INDEX = 48;
 
@@ -10,15 +10,19 @@ int find_player(const State &state) {
     return -1;
 }
 
-std::vector<int> get_possible_moves(int player_index) {
+std::vector<int> get_possible_moves(const State& state, int player_index) {
     std::vector<int> moves{};
     int row = player_index / MAZE_SIZE;
     int col = player_index % MAZE_SIZE;
 
-    if (row > 0) moves.push_back(player_index - MAZE_SIZE);
-    if (row + 1 < MAZE_SIZE) moves.push_back(player_index + MAZE_SIZE);
-    if (col > 0) moves.push_back(player_index - 1);
-    if (col + 1 < MAZE_SIZE) moves.push_back(player_index + 1);
+    if (row > 0 && state[player_index - MAZE_SIZE] != WALL)
+        moves.push_back(player_index - MAZE_SIZE);
+    if (row + 1 < MAZE_SIZE && state[player_index + MAZE_SIZE] != WALL)
+        moves.push_back(player_index + MAZE_SIZE);
+    if (col > 0 && state[player_index - 1] != WALL)
+        moves.push_back(player_index - 1);
+    if (col + 1 < MAZE_SIZE && state[player_index + 1] != WALL)
+        moves.push_back(player_index + 1);
     return moves;
 }
 

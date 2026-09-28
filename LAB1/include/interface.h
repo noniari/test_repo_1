@@ -1,5 +1,5 @@
 #include <common.h>
-#include <game8.h>
+#include <maze.h>
 
 void print_state(const State& state);
 

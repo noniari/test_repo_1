@@ -11,7 +11,6 @@ void print_state(const State &state) {
 
 State parse_state(const std::string &input) {
     State state;
-    state.reserve(9);
     std::stringstream ss(input);
     int num;
     while (ss >> num) state.push_back(num);
@@ -23,7 +22,8 @@ void write_solution(const std::string& file_name,
     std::ofstream output(file_name);
     for (const auto& state : solution) {
         for (int i = 0; i < static_cast<int>(state.size()); ++i) {
-            output << state[i] << " ";
+            if (i % MAZE_SIZE != 0) output << " ";
+            output << state[i];
             if ((i + 1) % MAZE_SIZE == 0) output << '\n';
         }
         output << '\n';
