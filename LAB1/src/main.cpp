@@ -14,19 +14,19 @@ struct RunResult {
 
 int main() {
     const std::string input =
-        "0 1 0 0 0 0 0 "
-        "0 1 0 1 1 1 0 "
-        "0 0 0 0 0 1 0 "
-        "1 1 1 1 0 1 0 "
-        "0 0 0 1 0 0 0 "
-        "0 1 0 1 1 1 0 "
-        "0 0 0 0 0 0 0";
+        "1 1 1 1 1 1 1 "
+        "1 1 2 1 0 0 1 "
+        "1 0 0 0 0 1 1 "
+        "1 1 0 1 0 1 1 "
+        "1 0 0 1 0 0 1 "
+        "1 1 0 0 1 0 1 "
+        "1 1 1 1 1 0 1";
     const std::vector<std::pair<std::string, int>> starts = {
-        {"Start 1 (0,0)", 0},
-        {"Start 2 (2,0)", 14},
-        {"Start 3 (2,2)", 16},
+        {"Start 1 (1,2)", 9},
+        {"Start 2 (2,2)", 16},
+        {"Start 3 (3,2)", 23},
         {"Start 4 (4,4)", 32},
-        {"Start 5 (6,0)", 42}
+        {"Start 5 (5,6)", 41}
     };
     const int depth_limit = MAZE_SIZE * MAZE_SIZE - 1;
     std::vector<RunResult> results;
@@ -48,6 +48,8 @@ int main() {
 
     for (size_t index = 0; index < starts.size(); ++index) {
         State start = parse_state(input);
+        for (int& cell : start)
+            if (cell == PLAYER) cell = EMPTY;
         start[starts[index].second] = PLAYER;
         auto bfs_solution = measure(starts[index].first, "BFS", [&]() {
             return BFS_solve(start);
@@ -71,7 +73,7 @@ int main() {
                << "|---|---|---:|---:|---:|\n";
         for (const auto& row : rows) {
             output << "| " << row.start << " | " << row.algorithm << " | ";
-            if (row.path_length < 0) output << "не найдено";
+            if (row.path_length < 0) output << "not found";
             else output << row.path_length;
             output << " | " << row.visited << " | "
                    << std::fixed << std::setprecision(2)

@@ -1,8 +1,14 @@
 #include <maze.h>
 
-const int GOAL_INDEX = 48;
+bool is_goal(const State& state) {
+    int player_index = find_player(state);
+    if (player_index < 0) return false;
 
-bool is_goal(const State &state) { return find_player(state) == GOAL_INDEX; }
+    int row = player_index / MAZE_SIZE;
+    int col = player_index % MAZE_SIZE;
+    return row == 0 || row == MAZE_SIZE - 1 ||
+           col == 0 || col == MAZE_SIZE - 1;
+}
 
 int find_player(const State &state) {
     for (int i = 0; i < static_cast<int>(state.size()); ++i)

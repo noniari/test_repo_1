@@ -4,6 +4,35 @@
 #include <cmath>
 #include <maze.h>
 
+namespace {
+int distance_to_exit(const State& state, bool use_euclidean) {
+    int current = find_player(state);
+    if (current < 0) return 0;
+
+    int current_row = current / MAZE_SIZE;
+    int current_col = current % MAZE_SIZE;
+    int best_distance = MAZE_SIZE * MAZE_SIZE;
+
+    for (int index = 0; index < static_cast<int>(state.size()); ++index) {
+        int row = index / MAZE_SIZE;
+        int col = index % MAZE_SIZE;
+        bool is_boundary = row == 0 || row == MAZE_SIZE - 1 ||
+                           col == 0 || col == MAZE_SIZE - 1;
+        if (!is_boundary || state[index] == WALL) continue;
+
+        int row_distance = std::abs(current_row - row);
+        int col_distance = std::abs(current_col - col);
+        int distance = use_euclidean
+            ? static_cast<int>(std::sqrt(row_distance * row_distance +
+                                         col_distance * col_distance))
+            : row_distance + col_distance;
+        best_distance = std::min(best_distance, distance);
+    }
+
+    return best_distance;
+}
+}
+
 size_t StateHash::operator()(const State &state) const {
     return std::accumulate(std::begin(state), std::end(state), size_t(0), 
         [](size_t h, int tile){
@@ -105,20 +134,11 @@ std::pair<std::vector<State>, int> DLS_solve(State init_state, int limit) {
 }
 
 int manhattan_distance(const State& state) {
-    int current = find_player(state);
-    int row = current / MAZE_SIZE;
-    int col = current % MAZE_SIZE;
-    return std::abs(row - (MAZE_SIZE - 1)) + std::abs(col - (MAZE_SIZE - 1));
+    return distance_to_exit(state, false);
 }
 
 int euclidean_distance(const State& state) {
-    int current = find_player(state);
-    int row = current / MAZE_SIZE;
-    int col = current % MAZE_SIZE;
-    int row_distance = row - (MAZE_SIZE - 1);
-    int col_distance = col - (MAZE_SIZE - 1);
-    return static_cast<int>(std::sqrt(row_distance * row_distance +
-                                      col_distance * col_distance));
+    return distance_to_exit(state, true);
 }
 
 std::pair<std::vector<State>, int> EST_solve(State init_state, int (*est)(const State&)) {
