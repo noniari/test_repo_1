@@ -63,7 +63,7 @@ export function MapView({ expeditions, selectedId, onSelect }: MapViewProps) {
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+         url="https://tile.openstreetmap.de/{z}/{x}/{y}.png"
       />
       {expeditions.map((feature) => {
         const { properties, geometry } = feature
