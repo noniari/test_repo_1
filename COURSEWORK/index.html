@@ -3,153 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="mintcream" />
+    <meta name="theme-color" content="white" />
     <meta name="description" content="Начало проекта интерактивной карты научных экспедиций." />
     <title>Маршруты научных открытий</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-      :root {
-        font-family: 'DM Sans', sans-serif;
-        color: darkslategray;
-        background: mintcream;
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        letter-spacing: 0;
-        font-weight: 400;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        min-width: 320px;
-        min-height: 100vh;
-        margin: 0;
-      }
-
-      .page {
-        min-height: 100svh;
-        display: grid;
-        grid-template-rows: auto minmax(380px, 1fr);
-        gap: 22px;
-        padding: 0 26px 26px;
-      }
-
-      .masthead {
-        min-height: 142px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        border-bottom: 1px solid lightgray;
-      }
-
-      h1 {
-        margin: 0;
-        color: darkslategray;
-        font-family: 'Manrope', sans-serif;
-        font-size: 42px;
-        font-weight: 700;
-        line-height: 1.08;
-        letter-spacing: 0;
-      }
-
-      h1 span {
-        display: block;
-        color: cadetblue;
-        font-weight: 500;
-      }
-
-      .project-status {
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        padding: 9px 11px;
-        color: darkslategray;
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        background: honeydew;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 10px;
-        font-weight: 600;
-        line-height: 1.3;
-      }
-
-      .project-status::before {
-        width: 7px;
-        height: 7px;
-        flex: 0 0 auto;
-        border-radius: 50%;
-        background: peru;
-        content: '';
-      }
-
-      .map-frame {
-        min-height: 0;
-        position: relative;
-        overflow: hidden;
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        background: honeydew;
-        box-shadow: 0 8px 26px lightgray;
-      }
-
-      #map {
-        width: 100%;
-        height: 100%;
-        min-height: 380px;
-      }
-
-      .leaflet-container {
-        background: honeydew;
-        font-family: 'DM Sans', sans-serif;
-      }
-
-      .leaflet-control-zoom a {
-        color: darkslategray !important;
-      }
-
-      .leaflet-control-attribution {
-        font-size: 10px !important;
-      }
-
-      @media (max-width: 700px) {
-        .page {
-          grid-template-rows: auto minmax(360px, 1fr);
-          gap: 16px;
-          padding: 0 14px 14px;
-        }
-
-        .masthead {
-          min-height: 126px;
-          align-items: flex-start;
-          flex-direction: column;
-          justify-content: center;
-          gap: 12px;
-          padding: 17px 0;
-        }
-
-        h1 {
-          font-size: 32px;
-        }
-
-        .project-status {
-          padding: 6px 8px;
-          font-size: 9px;
-        }
-
-        #map {
-          min-height: 360px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="page">
@@ -163,20 +24,6 @@
     </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-      const map = L.map('map', {
-        center: [20, 10],
-        zoom: 2,
-        minZoom: 2,
-        maxZoom: 9,
-        scrollWheelZoom: true,
-        worldCopyJump: true,
-      })
-
-      L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://www.fossgis.de/">FOSSGIS</a>',
-      }).addTo(map)
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>
