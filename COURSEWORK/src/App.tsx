@@ -203,7 +203,7 @@ function App() {
             <span><i className="legend-line legend-other" /> Другие направления</span>
             <span><i className="legend-dot" /> Место наблюдения</span>
           </div>
-          <div className="map-credit">Картографические данные © OpenStreetMap</div>
+          <div className="map-credit">© OpenStreetMap · © CARTO</div>
         </section>
       </section>
     </main>
