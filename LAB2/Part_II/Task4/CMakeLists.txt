@@ -1,0 +1,2 @@
+add_executable(task4_cover_intervals src/main.cpp src/cover_intervals.cpp)
+target_include_directories(task4_cover_intervals PRIVATE include)

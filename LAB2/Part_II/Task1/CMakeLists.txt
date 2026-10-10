@@ -1,0 +1,2 @@
+add_executable(task1_powers_of_four src/main.cpp src/powers_of_four.cpp)
+target_include_directories(task1_powers_of_four PRIVATE include)

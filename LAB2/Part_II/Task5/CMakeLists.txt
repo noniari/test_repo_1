@@ -1,0 +1,2 @@
+add_executable(task5_cover_points src/main.cpp src/cover_points.cpp)
+target_include_directories(task5_cover_points PRIVATE include)

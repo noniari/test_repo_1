@@ -1,0 +1,2 @@
+add_executable(task2_egyptian_fractions src/main.cpp src/egyptian_fractions.cpp)
+target_include_directories(task2_egyptian_fractions PRIVATE include)

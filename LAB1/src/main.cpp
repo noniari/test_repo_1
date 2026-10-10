@@ -10,12 +10,13 @@ struct RunResult {
     int path_length;
     int visited;
     double elapsed_microseconds;
+    std::vector<State> solution;
 };
 
 int main() {
     const std::string input =
         "1 1 1 1 1 1 1 "
-        "1 1 2 1 0 0 1 "
+        "1 1 0 1 0 0 1 "
         "1 0 0 0 0 1 1 "
         "1 1 0 1 0 1 1 "
         "1 0 0 1 0 0 1 "
@@ -26,11 +27,10 @@ int main() {
         {"Start 2 (2,2)", 16},
         {"Start 3 (3,2)", 23},
         {"Start 4 (4,4)", 32},
-        {"Start 5 (5,6)", 41}
+        {"Start 5 (4,5)", 33}
     };
     const int depth_limit = MAZE_SIZE * MAZE_SIZE - 1;
     std::vector<RunResult> results;
-    std::vector<State> first_bfs_solution;
 
     auto measure = [&](const std::string& start_name,
                        const std::string& algorithm, auto solve) {
@@ -42,8 +42,7 @@ int main() {
         int path_length = solution.first.empty()
             ? -1 : static_cast<int>(solution.first.size()) - 1;
         results.push_back({start_name, algorithm, path_length,
-                           solution.second, elapsed});
-        return solution.first;
+                           solution.second, elapsed, solution.first});
     };
 
     for (size_t index = 0; index < starts.size(); ++index) {
@@ -51,10 +50,9 @@ int main() {
         for (int& cell : start)
             if (cell == PLAYER) cell = EMPTY;
         start[starts[index].second] = PLAYER;
-        auto bfs_solution = measure(starts[index].first, "BFS", [&]() {
+        measure(starts[index].first, "BFS", [&]() {
             return BFS_solve(start);
         });
-        if (index == 0) first_bfs_solution = bfs_solution;
         measure(starts[index].first, "DLS", [&]() {
             return DLS_solve(start, depth_limit);
         });
@@ -66,7 +64,6 @@ int main() {
         });
     }
 
-    std::ofstream report("results.md");
     auto write_table = [](std::ostream& output,
                           const std::vector<RunResult>& rows) {
         output << "| Start Position | Algorithm | Path Length (moves) | Expanded Vertices | Time (us) |\n"
@@ -80,9 +77,28 @@ int main() {
                    << row.elapsed_microseconds << " |\n";
         }
     };
+
+        std::ofstream report("sol(Var2).txt");
+        for (const auto& row : results) {
+            report << row.start << " | " << row.algorithm << '\n';
+            if (row.solution.empty()) {
+                report << "Solution not found\n\n";
+                continue;
+            }
+
+            for (const auto& state : row.solution) {
+                for (int cell = 0; cell < static_cast<int>(state.size()); ++cell) {
+                    if (cell % MAZE_SIZE != 0) report << ' ';
+                    report << state[cell];
+                    if ((cell + 1) % MAZE_SIZE == 0) report << '\n';
+                }
+                report << '\n';
+            }
+            report << "Path length: " << row.path_length << " moves\n\n";
+        }
+        report << "Results\n";
     write_table(std::cout, results);
     write_table(report, results);
-    write_solution("sol(Var2).txt", first_bfs_solution);
 
     return 0;
 }
