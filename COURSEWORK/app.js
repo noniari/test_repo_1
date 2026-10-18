@@ -11,3 +11,5 @@ L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://www.fossgis.de/">FOSSGIS</a>',
 }).addTo(map)
+
+L.control.scale({ imperial: false }).addTo(map)
